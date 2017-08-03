@@ -1,4 +1,19 @@
 import csv, sys
+import pymysql.connections
+
+
+def sqlSetup():
+    # This is a free sql host just for demo this project.
+    conn = pymysql.connect(
+        host='sql12.freemysqlhosting.net',
+        user='sql12188392',
+        passwd='jiaoliguo',
+        db='db',
+        autocommit=True
+    )
+
+
+
 
 def read():
     fileName = 'users.csv'
