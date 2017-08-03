@@ -1,6 +1,7 @@
 import csv, sys, re
 import pymysql
 
+# MySQL server login at http://www.phpmyadmin.co/index.php
 db = pymysql.connect(
     host="sql12.freemysqlhosting.net",
     user="sql12188392",
@@ -22,11 +23,12 @@ def checkVersion():
 def insertTable(firstname, lastname, email):
     sql = "INSERT INTO USERS(FIRST_NAME, LAST_NAME, EMAIL) VALUES ('%s', '%s', '%s')" % \
           (firstname, lastname, email)
-
     try:
         cursor.execute(sql)
         db.commit()
-    except:
+    except pymysql.InternalError as error:
+        code, message = error.args
+        print ">>>>>>>>>>>>>", code, message
         db.rollback()
 
 def main():
