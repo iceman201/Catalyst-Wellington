@@ -1,5 +1,4 @@
-import csv, sys, re
-import pymysql
+import csv, sys, re, pymysql
 
 # MySQL server login at http://www.phpmyadmin.co/index.php
 db = pymysql.connect(
@@ -20,7 +19,7 @@ def checkVersion():
     data = cursor.fetchone()
     print ("Database version : %s " % data)
 
-def insertTable(firstname, lastname, email):
+def insertUser(firstname, lastname, email):
     sql = "INSERT INTO USERS(FIRST_NAME, LAST_NAME, EMAIL) VALUES ('%s', '%s', '%s')" % \
           (firstname, lastname, email)
     try:
@@ -45,7 +44,7 @@ def main():
                 email = row[2]
                 if valid_email(email):
                     email.replace("'", "\\'").lower()
-                    insertTable(firstName, lastName, email)
+                    insertUser(firstName, lastName, email)
             db.close()
         except csv.Error as e:
             sys.exit('file %s, line %d: %s' % (fileName, fileReader.line_num, e))
