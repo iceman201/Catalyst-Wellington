@@ -43,7 +43,7 @@ def main():
                 email = row[2]
                 if valid_email(email):
                     email.replace("'", "\\'").lower()
-
+                    insertTable(firstName, lastName, email)
             db.close()
         except csv.Error as e:
             sys.exit('file %s, line %d: %s' % (fileName, fileReader.line_num, e))
