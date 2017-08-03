@@ -11,7 +11,7 @@ db = pymysql.connect(
 cursor = db.cursor()
 
 def valid_email(email):
-  return bool(re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})', email))
+    return bool(re.search('\w+[.|\w]\w+@\w+[.]\w+[.|\w+]\w+', email))
 
 def checkVersion():
     # This is a free sql host just for demo this project.
@@ -40,8 +40,10 @@ def main():
             for row in fileReader:
                 firstName = row[0].replace("'","\\'").title()
                 lastName = row[1].replace("'","\\'").title()
-                email = row[2].replace("'","\\'")
-                #insertTable(firstName, lastName, email)
+                email = row[2]
+                if valid_email(email):
+                    email.replace("'", "\\'").lower()
+
             db.close()
         except csv.Error as e:
             sys.exit('file %s, line %d: %s' % (fileName, fileReader.line_num, e))
